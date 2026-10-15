@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MediaGallery from '../components/MediaGallery.astro';
 import { trip } from '../data/trip';
+import { journal, type ChapterSlug } from '../data/media';
 export function getStaticPaths() {
   return trip.chapters.map(chapter => ({ params: { chapter: chapter.slug }, props: { chapter } }));
 }
 const { chapter } = Astro.props;
+const days = journal[chapter.slug as ChapterSlug];
 ---
 <BaseLayout title={`${chapter.name} · ${trip.title}`}>
   <a class="back" href="/#chapters">← 返回旅行章节</a>
@@ -13,10 +16,25 @@ const { chapter } = Astro.props;
     <h1>{chapter.name}</h1>
     <p class="lead">{chapter.note}</p>
   </section>
-  <section class="empty-state">
-    <p class="eyebrow">STORIES TO COME</p>
-    <h2>这一段旅程，正在整理。</h2>
-    <p>这里将收藏每天的照片、动态瞬间与旅行手记。</p>
-    {chapter.slug === 'camino' && <p>六天的起终点与路线，将按实际行程补充。</p>}
-  </section>
+  {days.length > 0 ? (
+    <section class="journal" aria-label={`${chapter.name}每日游记`}>
+      {days.map((day) => (
+        <article class="journal-day">
+          <div class="day-copy">
+            <p class="eyebrow">CHAPTER DAY {String(day.day).padStart(2, '0')}</p>
+            <h2>{day.title ?? `第 ${day.day} 天`}</h2>
+            {day.story && <p>{day.story}</p>}
+          </div>
+          <MediaGallery items={day.media} label={`${chapter.name}第 ${day.day} 天的照片与视频`} />
+        </article>
+      ))}
+    </section>
+  ) : (
+    <section class="empty-state">
+      <p class="eyebrow">STORIES TO COME</p>
+      <h2>这一段旅程，正在整理。</h2>
+      <p>这里将收藏每天的照片、动态瞬间与旅行手记。</p>
+      {chapter.slug === 'camino' && <p>六天的起终点与路线，将按实际行程补充。</p>}
+    </section>
+  )}
 </BaseLayout>

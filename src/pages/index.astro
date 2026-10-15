@@ -6,7 +6,7 @@ import { trip } from '../data/trip';
   <section class="intro">
     <p class="eyebrow">A JOURNEY THROUGH SPAIN</p>
     <h1>西班牙，<br />十三日<span class="dot">。</span></h1>
-    <p class="lead">三天巴塞罗那，三天马德里，六天朝圣之路。<br />把照片里的瞬间，慢慢写成故事。</p>
+    <p class="lead">三天巴塞罗那，三天马德里，六天朝圣之路。<br />还有一天待确认，把照片里的瞬间慢慢写成故事。</p>
     <a class="button" href="#chapters">翻开旅行手记 ↓</a>
   </section>
   <section id="chapters" aria-labelledby="chapter-title">
@@ -20,5 +20,5 @@ import { trip } from '../data/trip';
       ))}
     </div>
   </section>
-  <aside class="draft-note">手记正在整理中。真实照片、视频与每日路线将陆续加入。</aside>
+  <aside class="draft-note">已确认 12 / {trip.totalDays} 天 · 余下 {trip.unassignedDays} 天的行程待确认。真实照片、视频与每日路线将陆续加入。</aside>
 </BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import MotionPhoto from './MotionPhoto.astro';
 import type { MediaItem } from '../data/media';
+import { withBasePath } from '../lib/urls';
 
 interface Props {
   items: MediaItem[];
@@ -15,7 +16,7 @@ const { items, label } = Astro.props;
     item.kind === 'photo' ? (
       <figure class="media-item photo">
         <img
-          src={item.src}
+          src={withBasePath(item.src)}
           alt={item.alt}
           width={item.width}
           height={item.height}
@@ -26,17 +27,28 @@ const { items, label } = Astro.props;
       </figure>
     ) : item.kind === 'motion' ? (
       <MotionPhoto
-        poster={item.poster}
-        video={item.src}
+        poster={withBasePath(item.poster)}
+        video={withBasePath(item.src)}
         alt={item.alt}
         caption={item.caption}
       />
-    ) : (
+    ) : item.kind === 'video' ? (
       <figure class="media-item video">
-        <video poster={item.poster} controls playsinline preload="metadata" aria-label={item.alt}>
-          <source src={item.src} type="video/mp4" />
-          您的浏览器暂不支持视频播放。<a href={item.src}>打开视频</a>
+        <video poster={item.poster && withBasePath(item.poster)} controls playsinline preload="metadata" aria-label={item.alt}>
+          <source src={withBasePath(item.src)} type="video/mp4" />
+          您的浏览器暂不支持视频播放。<a href={withBasePath(item.src)}>打开视频</a>
         </video>
+        <figcaption>{item.caption ?? item.alt}</figcaption>
+      </figure>
+    ) : (
+      <figure class="media-item video mux-video">
+        <iframe
+          src={`https://player.mux.com/${item.playbackId}?metadata-video-title=${encodeURIComponent(item.caption ?? item.alt)}`}
+          title={item.alt}
+          loading="lazy"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
         <figcaption>{item.caption ?? item.alt}</figcaption>
       </figure>
     )
@@ -56,9 +68,9 @@ const { items, label } = Astro.props;
 <style>
   .media-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .media-item, :global(.media-gallery .motion-photo) { min-width: 0; margin: 0; }
-  .media-item img, .media-item video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #dedccf; border-radius: 4px; }
+  .media-item img, .media-item video, .media-item iframe { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #dedccf; border: 0; border-radius: 4px; overflow: hidden; }
   .media-item:nth-child(3n + 1), .single .media-item, :global(.media-gallery.single .motion-photo) { grid-column: 1 / -1; }
-  .media-item:nth-child(3n + 1) img, .media-item:nth-child(3n + 1) video, .single .media-item img, .single .media-item video { aspect-ratio: 16 / 10; }
+  .media-item:nth-child(3n + 1) img, .media-item:nth-child(3n + 1) video, .media-item:nth-child(3n + 1) iframe, .single .media-item img, .single .media-item video, .single .media-item iframe { aspect-ratio: 16 / 10; }
   figcaption { margin-top: 7px; color: #706d64; font-size: 12px; line-height: 1.55; }
   @media (min-width: 768px) { .media-gallery { gap: 16px; } }
 </style>

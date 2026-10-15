@@ -1,0 +1,27 @@
+---
+import SanityStudio from '../../components/SanityStudio.jsx';
+
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || '';
+const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>Spain Journal · 内容后台</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <SanityStudio projectId={projectId} dataset={dataset} client:only="react" />
+  </body>
+</html>

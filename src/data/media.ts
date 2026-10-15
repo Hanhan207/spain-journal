@@ -9,13 +9,16 @@ interface MediaBase {
 export type MediaItem =
   | (MediaBase & { kind: 'photo' })
   | (MediaBase & { kind: 'motion'; poster: string })
-  | (MediaBase & { kind: 'video'; poster?: string });
+  | (MediaBase & { kind: 'video'; poster?: string })
+  | (Omit<MediaBase, 'src'> & { kind: 'mux'; playbackId: string });
 
 export interface JournalDay {
   /** 章节内的天数，从 1 开始；总行程顺序确认后再补全局 Day 编号。 */
   day: number;
   title?: string;
   story?: string;
+  date?: string;
+  location?: string;
   media: MediaItem[];
 }
 

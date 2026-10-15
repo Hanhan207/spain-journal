@@ -7,4 +7,5 @@
 .journal-day{display:grid;gap:24px;padding:36px 0 48px;border-bottom:1px solid #d8d7cb}
 .day-copy h2{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;font-size:30px;font-weight:400;margin:8px 0 12px}
 .day-copy>p:last-child{color:#62695d;max-width:38rem}
+.day-meta{margin:-4px 0 14px;color:#8a877c;font-size:12px;letter-spacing:.04em}
 @media(min-width:768px){.journal-day{grid-template-columns:minmax(180px,1fr) minmax(0,2fr);gap:48px;padding:56px 0 72px}.day-copy{position:sticky;top:24px;align-self:start}}

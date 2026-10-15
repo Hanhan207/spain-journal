@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { trip } from '../data/trip';
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 <BaseLayout title={trip.title}>
   <section class="intro">
@@ -13,7 +14,7 @@ import { trip } from '../data/trip';
     <div class="section-heading"><h2 id="chapter-title">旅程的三个章节</h2><span>01 — 03</span></div>
     <div class="chapter-grid">
       {trip.chapters.map((chapter, index) => (
-        <a class="chapter" href={`/${chapter.slug}/`} style={`--accent:${chapter.color}`}>
+        <a class="chapter" href={`${base}${chapter.slug}/`} style={`--accent:${chapter.color}`}>
           <div class="chapter-art"><span class="chapter-number">0{index + 1}</span><span>{chapter.english}</span></div>
           <div class="chapter-caption"><div><p class="eyebrow">{chapter.days} DAYS</p><h3>{chapter.name}</h3><p>{chapter.note}</p></div><span aria-hidden="true">↗</span></div>
         </a>

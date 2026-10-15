@@ -1,0 +1,11 @@
+{
+  "_id": "journey-spain-13-days",
+  "_type": "journey",
+  "title": "西班牙，十三日",
+  "slug": {
+    "_type": "slug",
+    "current": "spain-13-days"
+  },
+  "summary": "巴塞罗那 3 天、马德里 3 天、朝圣之路 6 天，另 1 天待确认。",
+  "totalDays": 13
+}

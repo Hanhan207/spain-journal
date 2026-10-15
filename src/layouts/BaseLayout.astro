@@ -2,6 +2,7 @@
 import '../styles/global.css';
 interface Props { title: string; }
 const { title } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -14,7 +15,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <a class="skip" href="#main">跳到正文</a>
-    <header><a class="brand" href="/">十三日 <span>SPAIN JOURNAL</span></a><a href="/#chapters">旅行章节 ↗</a></header>
+    <header><a class="brand" href={base}>十三日 <span>SPAIN JOURNAL</span></a><a href={`${base}#chapters`}>旅行章节 ↗</a></header>
     <main id="main"><slot /></main>
     <footer><span>西班牙 · 旅行手记</span><span>照片、片刻，以及走过的路。</span></footer>
   </body>

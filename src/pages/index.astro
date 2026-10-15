@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { trip } from '../data/trip';
+---
+<BaseLayout title={trip.title}>
+  <section class="intro">
+    <p class="eyebrow">A JOURNEY THROUGH SPAIN</p>
+    <h1>西班牙，<br />十三日<span class="dot">。</span></h1>
+    <p class="lead">三天巴塞罗那，三天马德里，六天朝圣之路。<br />把照片里的瞬间，慢慢写成故事。</p>
+    <a class="button" href="#chapters">翻开旅行手记 ↓</a>
+  </section>
+  <section id="chapters" aria-labelledby="chapter-title">
+    <div class="section-heading"><h2 id="chapter-title">旅程的三个章节</h2><span>01 — 03</span></div>
+    <div class="chapter-grid">
+      {trip.chapters.map((chapter, index) => (
+        <a class="chapter" href={`/${chapter.slug}/`} style={`--accent:${chapter.color}`}>
+          <div class="chapter-art"><span class="chapter-number">0{index + 1}</span><span>{chapter.english}</span></div>
+          <div class="chapter-caption"><div><p class="eyebrow">{chapter.days} DAYS</p><h3>{chapter.name}</h3><p>{chapter.note}</p></div><span aria-hidden="true">↗</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <aside class="draft-note">手记正在整理中。真实照片、视频与每日路线将陆续加入。</aside>
+</BaseLayout>

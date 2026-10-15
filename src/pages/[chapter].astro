@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { trip } from '../data/trip';
+export function getStaticPaths() {
+  return trip.chapters.map(chapter => ({ params: { chapter: chapter.slug }, props: { chapter } }));
+}
+const { chapter } = Astro.props;
+---
+<BaseLayout title={`${chapter.name} · ${trip.title}`}>
+  <a class="back" href="/#chapters">← 返回旅行章节</a>
+  <section class="intro chapter-intro" style={`--accent:${chapter.color}`}>
+    <p class="eyebrow">{chapter.english} · {chapter.days} DAYS</p>
+    <h1>{chapter.name}</h1>
+    <p class="lead">{chapter.note}</p>
+  </section>
+  <section class="empty-state">
+    <p class="eyebrow">STORIES TO COME</p>
+    <h2>这一段旅程，正在整理。</h2>
+    <p>这里将收藏每天的照片、动态瞬间与旅行手记。</p>
+    {chapter.slug === 'camino' && <p>六天的起终点与路线，将按实际行程补充。</p>}
+  </section>
+</BaseLayout>
